@@ -1,27 +1,27 @@
 package com.varunbehl.spring.service;
 
-import java.util.List;
-
 import com.varunbehl.spring.model.Owner;
+
+import java.util.List;
 
 
 public interface MyDataService {
 
-	public List<Owner> getAllData();
+    List<Owner> getAllData();
 
-	public boolean saveData(Owner myData);
+    boolean saveData(Owner myData);
 
-	public boolean deleteData(Owner myData);
+    boolean deleteData(Owner myData);
 
-	public void deleteAllMyDatas();
+    void deleteAllMyDatas();
 
-	public void deleteMyDataById(long id);
+    void deleteMyDataById(long id);
 
-	public Owner findById(String id);
+    Owner findById(String id);
 
-	public void updateMyData(Owner currentMyData);
+    void updateMyData(Owner currentMyData);
 
-	public void saveMyData(Owner myData);
+    void saveMyData(Owner myData);
 
-	public boolean isMyDataExist(Owner myData);
+    boolean isMyDataExist(Owner myData);
 }

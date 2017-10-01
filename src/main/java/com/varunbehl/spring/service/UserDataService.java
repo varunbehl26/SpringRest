@@ -1,15 +1,14 @@
 package com.varunbehl.spring.service;
 
-import java.util.List;
-
-import com.varunbehl.spring.model.Owner;
 import com.varunbehl.spring.model.User;
 
+import java.util.List;
+
 public interface UserDataService {
-	public List<User> getAllData();
+    List<User> getAllData();
 
-	public User findById(String id);
+    User findById(String id);
 
-	public void saveUserData(User myData);
+    void saveUserData(User myData);
 
 }
