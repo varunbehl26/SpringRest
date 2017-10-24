@@ -1,10 +1,7 @@
 package com.varunbehl.spring.persistence;
 
 import com.varunbehl.spring.model.User;
-import org.apache.ibatis.annotations.Delete;
-import org.apache.ibatis.annotations.Insert;
-import org.apache.ibatis.annotations.Select;
-import org.apache.ibatis.annotations.Update;
+import org.apache.ibatis.annotations.*;
 
 import java.util.List;
 
@@ -13,8 +10,10 @@ public interface UserDataMapper {
     @Select("SELECT * FROM user")
     List<User> getAllData();
 
-    @Insert("INSERT INTO user ( userId ,  userPassword ,  userName ,  userEmail ,  userMobile ,  userPhone ,  gymId ,  dietId ,  userLevel ,  userImage ,  userSex ,  userDob ,  gymSlot ,  userWeight ,  userHeight ,  userBmi ,  userStatus ,  userAttendence ,  userType ,  userSubscription ) VALUES (#{userId}, #{userPassword}, #{userName}, #{userEmail}, #{userMobile}, #{userPhone}, #{gymId},  #{dietId}, #{userLevel}, #{userImage}, #{userSex}, #{userDob},  #{gymSlot}, #{userWeight}, #{userHeight}, #{userBmi}, #{userStatus}, #{userAttendence}, #{userType}, #{userSubscription})")
-    void saveData(User myData);
+
+    @Options(useGeneratedKeys = true, keyProperty = "userId", keyColumn = "userId")
+    @Insert("INSERT INTO user (  userPassword ,  userName ,  userEmail ,  userMobile ,  userPhone ,  gymId ,  dietId ,  userLevel ,  userImage ,  userSex ,  userDob ,  gymSlot ,  userWeight ,  userHeight ,  userBmi ,  userStatus ,  userAttendence ,  userType ,  userSubscription ) VALUES ( #{userPassword}, #{userName}, #{userEmail}, #{userMobile}, #{userPhone}, #{gymId},  #{dietId}, #{userLevel}, #{userImage}, #{userSex}, #{userDob},  #{gymSlot}, #{userWeight}, #{userHeight}, #{userBmi}, #{userStatus}, #{userAttendence}, #{userType}, #{userSubscription})")
+    int saveData(User myData);
 
     @Update("UPDATE user SET title = #{title}, dateModified = #{dateModified} WHERE id = #{id}")
     int updateTodo(User myData);
@@ -23,5 +22,8 @@ public interface UserDataMapper {
     int deleteData(User myData);
 
     @Select("SELECT * FROM user where gymId = #{id}")
-    User findById(String id);
+    List<User> findById(String id);
+
+    @Select("SELECT * FROM user where userEmail = #{email}")
+    User findByEmail(String email);
 }

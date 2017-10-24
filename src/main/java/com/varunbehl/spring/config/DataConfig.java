@@ -12,24 +12,15 @@ import javax.sql.DataSource;
 
 @Configuration
 @MapperScan("com.varunbehl.spring.persistence")
-class DataConfig {
+public class DataConfig {
 
     @Bean
-    private DataSource dataSource() {
+    public DataSource dataSource() {
         SimpleDriverDataSource dataSource = new SimpleDriverDataSource();
         dataSource.setDriverClass(Driver.class);
         dataSource.setUsername("root");
         dataSource.setUrl("jdbc:mysql://localhost:8889/gym");
         dataSource.setPassword("Pulsur");
-
-        // create a table and populate some data
-//		JdbcTemplate jdbcTemplate = new JdbcTemplate(dataSource);
-//		System.out.println("Creating tables");
-//		jdbcTemplate.execute("drop table users if exists");
-//		jdbcTemplate.execute(
-//				"create table users(id serial, firstName varchar(255), lastName varchar(255), email varchar(255))");
-//		jdbcTemplate.update("INSERT INTO users(firstName, lastName, email) values (?,?,?)", "Mike", "Lanyon",
-//				"lanyonm@gmail.com");
 
         return dataSource;
     }

@@ -19,12 +19,17 @@ public class UserDataServiceImpl implements UserDataService {
     }
 
     @Override
-    public User findById(String id) {
+    public List<User> findById(String id) {
         return userDataMapper.findById(id);
     }
 
-    public void saveUserData(User myData) {
-        userDataMapper.saveData(myData);
+    public int saveUserData(User myData) {
+        return userDataMapper.saveData(myData);
+    }
+
+    @Override
+    public User findByEmail(String email) {
+        return userDataMapper.findByEmail(email);
     }
 
 }

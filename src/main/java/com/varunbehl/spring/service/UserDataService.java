@@ -7,8 +7,9 @@ import java.util.List;
 public interface UserDataService {
     List<User> getAllData();
 
-    User findById(String id);
+    List<User> findById(String id);
 
-    void saveUserData(User myData);
+    int saveUserData(User myData);
 
+    User findByEmail(String email);
 }

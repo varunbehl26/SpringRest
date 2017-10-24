@@ -3,7 +3,6 @@ package com.varunbehl.spring.controller;
 import com.varunbehl.spring.model.User;
 import com.varunbehl.spring.service.UserDataService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -18,42 +17,56 @@ public class UserControlller {
     @Autowired
     private UserDataService userDataService;
 
-    // ----------Retrieve All MyDatas-----------------------
 
     @RequestMapping(value = "/User/", method = RequestMethod.GET)
     public ResponseEntity<List<User>> listAllMyDatas() {
-        List<User> MyDatas = userDataService.getAllData();
-        if (MyDatas.isEmpty()) {
+        List<User> userList = userDataService.getAllData();
+        if (userList.isEmpty()) {
             return new ResponseEntity<List<User>>(HttpStatus.NO_CONTENT);
         }
-        return new ResponseEntity<List<User>>(MyDatas, HttpStatus.OK);
+        return new ResponseEntity<List<User>>(userList, HttpStatus.OK);
     }
 
-    // -----Retrieve Single MyData-----------------------------
 
     @RequestMapping(value = "/User/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<User> getMyData(@PathVariable("id") String id) {
-        System.out.println("Fetching MyData with id " + id);
-        User MyData = userDataService.findById(id);
-        if (MyData == null) {
-            return new ResponseEntity<User>(HttpStatus.NOT_FOUND);
+    public ResponseEntity<List<User>> getMyData(@PathVariable("id") String id) {
+        System.out.println("Fetching userList with id " + id);
+        List<User> userList = userDataService.findById(id);
+        if (userList == null) {
+            return new ResponseEntity<List<User>>(HttpStatus.NOT_FOUND);
         }
-        return new ResponseEntity<User>(MyData, HttpStatus.OK);
+        return new ResponseEntity<List<User>>(userList, HttpStatus.OK);
     }
 
-    // --------Create a MyData-------------------------------------
+    @RequestMapping(value = "/User/{email}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<User> findByEmail(@PathVariable("email") String email) {
+        System.out.println("Fetching userList with id " + email);
+        User user = userDataService.findByEmail(email);
+        if (user == null) {
+            return new ResponseEntity<User>(HttpStatus.NOT_FOUND);
+        }
+        return new ResponseEntity<User>(user, HttpStatus.OK);
+    }
+
 
     @RequestMapping(value = "/User/", method = RequestMethod.POST)
-    public ResponseEntity<Void> createMyData(@RequestBody User MyData, UriComponentsBuilder ucBuilder) {
+    public ResponseEntity<User> createMyData(@RequestBody User user, UriComponentsBuilder ucBuilder) {
 
-//		if (userDataService.isMyDataExist(MyData)) {
-//			return new ResponseEntity<Void>(HttpStatus.CONFLICT);
-//		}
 
-        userDataService.saveUserData(MyData);
+        User userFromDb = userDataService.findByEmail(user.getUserEmail());
 
-        HttpHeaders headers = new HttpHeaders();
-        return new ResponseEntity<Void>(headers, HttpStatus.CREATED);
+        if (userFromDb != null) {
+            return new ResponseEntity<User>(userFromDb, HttpStatus.CONFLICT);
+        }
+
+        int id = userDataService.saveUserData(user);
+        if (id == 1) userFromDb = userDataService.findByEmail(user.getUserEmail());
+
+        if (id != 1 && user.getUserId() != null) {
+            return new ResponseEntity<User>(userFromDb, HttpStatus.CREATED);
+        }
+
+        return null;
     }
 
     // // ---- Update a MyData ---------------------------------------------

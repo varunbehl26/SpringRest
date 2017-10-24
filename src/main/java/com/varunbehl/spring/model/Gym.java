@@ -1,14 +1,16 @@
 package com.varunbehl.spring.model;
 
 
-class Gym {
+import java.math.BigInteger;
+
+public class Gym {
 
     private String gymId;
     private String gymName;
     private String gymAddress;
     private Integer gymLat;
     private Integer gymLong;
-    private Integer gymContact;
+    private BigInteger gymContact;
     private String gymCity;
     private String gymState;
     private String gymCountry;
@@ -60,11 +62,11 @@ class Gym {
         this.gymLong = gymLong;
     }
 
-    public Integer getGymContact() {
+    public BigInteger getGymContact() {
         return gymContact;
     }
 
-    public void setGymContact(Integer gymContact) {
+    public void setGymContact(BigInteger gymContact) {
         this.gymContact = gymContact;
     }
 

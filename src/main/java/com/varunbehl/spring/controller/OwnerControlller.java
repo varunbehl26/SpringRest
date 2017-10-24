@@ -1,7 +1,7 @@
 package com.varunbehl.spring.controller;
 
 import com.varunbehl.spring.model.Owner;
-import com.varunbehl.spring.service.MyDataService;
+import com.varunbehl.spring.service.OwnerDataService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -16,88 +16,74 @@ import java.util.List;
 class OwnerControlller {
 
     @Autowired
-    private MyDataService myDataService;
+    private OwnerDataService ownerDataService;
 
-    // ----------Retrieve All MyDatas-----------------------
 
     @RequestMapping(value = "/Owner/", method = RequestMethod.GET)
-    public ResponseEntity<List<Owner>> listAllMyDatas() {
-        List<Owner> MyDatas = myDataService.getAllData();
-        if (MyDatas.isEmpty()) {
+    public ResponseEntity<List<Owner>> listAllGymOwners() {
+        List<Owner> ownerList = ownerDataService.listAllGymOwners();
+        if (ownerList.isEmpty()) {
             return new ResponseEntity<List<Owner>>(HttpStatus.NO_CONTENT);
         }
-        return new ResponseEntity<List<Owner>>(MyDatas, HttpStatus.OK);
+        return new ResponseEntity<List<Owner>>(ownerList, HttpStatus.OK);
     }
 
-    // -----Retrieve Single MyData-----------------------------
 
-    @RequestMapping(value = "/Own2"
+    @RequestMapping(value = "/Owner/{id}"
             + "er/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Owner> getMyData(@PathVariable("id") String id) {
-        System.out.println("Fetching MyData with id " + id);
-        Owner MyData = myDataService.findById(id);
-        if (MyData == null) {
-            System.out.println("MyData with id " + id + " not found");
+    public ResponseEntity<Owner> findOwnerById(@PathVariable("id") long id) {
+        System.out.println("Fetching owner with id " + id);
+        Owner owner = ownerDataService.findOwnerById(id);
+        if (owner == null) {
+            System.out.println("owner with id " + id + " not found");
             return new ResponseEntity<Owner>(HttpStatus.NOT_FOUND);
         }
-        return new ResponseEntity<Owner>(MyData, HttpStatus.OK);
+        return new ResponseEntity<Owner>(owner, HttpStatus.OK);
     }
 
-    // --------Create a MyData-------------------------------------
 
-    @RequestMapping(value = "/MyData/", method = RequestMethod.POST)
-    public ResponseEntity<Void> createMyData(@RequestBody Owner MyData, UriComponentsBuilder ucBuilder) {
+    @RequestMapping(value = "/Owner/", method = RequestMethod.POST)
+    public ResponseEntity<Void> createOwner(@RequestBody Owner Owner, UriComponentsBuilder ucBuilder) {
 
-        if (myDataService.isMyDataExist(MyData)) {
-            return new ResponseEntity<Void>(HttpStatus.CONFLICT);
-        }
+//        if (ownerDataService.isOwnerExist(Owner)) {
+//            return new ResponseEntity<Void>(HttpStatus.CONFLICT);
+//        }
 
-        myDataService.saveMyData(MyData);
+        ownerDataService.saveOwner(Owner);
 
         HttpHeaders headers = new HttpHeaders();
         return new ResponseEntity<Void>(headers, HttpStatus.CREATED);
     }
 
-//	// ---- Update a MyData ---------------------------------------------
-//	@RequestMapping(value = "/MyData/{id}", method = RequestMethod.PUT)
-//	public ResponseEntity<Owner> updateMyData(@PathVariable("id") long id, @RequestBody Owner MyData) {
-//		System.out.println("Updating MyData " + id);
-//
-//		Owner currentMyData = myDataService.findById(id);
-//
-//		if (currentMyData == null) {
-//			System.out.println("MyData with id " + id + " not found");
-//			return new ResponseEntity<Owner>(HttpStatus.NOT_FOUND);
-//		}
-//
-//		myDataService.updateMyData(currentMyData);
-//		return new ResponseEntity<Owner>(currentMyData, HttpStatus.OK);
-//	}
+    @RequestMapping(value = "/Owner/{id}", method = RequestMethod.PUT)
+    public ResponseEntity<Owner> updateOwner(@PathVariable("id") long id, @RequestBody Owner Owner) {
+        System.out.println("Updating Owner " + id);
 
-//	// ------------------- Delete a MyData --------------------------------------
-//
-//	@RequestMapping(value = "/MyData/{id}", method = RequestMethod.DELETE)
-//	public ResponseEntity<Owner> deleteMyData(@PathVariable("id") long id) {
-//		System.out.println("Fetching & Deleting MyData with id " + id);
-//
-//		Owner MyData = myDataService.findById(id);
-//		if (MyData == null) {
-//			System.out.println("Unable to delete. MyData with id " + id + " not found");
-//			return new ResponseEntity<Owner>(HttpStatus.NOT_FOUND);
-//		}
-//
-//		myDataService.deleteMyDataById(id);
-//		return new ResponseEntity<Owner>(HttpStatus.NO_CONTENT);
-//	}
-//
-//	// ------------------- Delete All MyDatas -----------------------
-//
-//	@RequestMapping(value = "/MyData/", method = RequestMethod.DELETE)
-//	public ResponseEntity<Owner> deleteAllMyDatas() {
-//		System.out.println("Deleting All MyDatas");
-//
-//		myDataService.deleteAllMyDatas();
-//		return new ResponseEntity<Owner>(HttpStatus.NO_CONTENT);
-//	}
+        Owner currentOwner = ownerDataService.findOwnerById(id);
+
+        if (currentOwner == null) {
+            System.out.println("Owner with id " + id + " not found");
+            return new ResponseEntity<Owner>(HttpStatus.NOT_FOUND);
+        }
+
+//		ownerDataService.updateOwner(currentOwner);
+        return new ResponseEntity<Owner>(currentOwner, HttpStatus.OK);
+    }
+
+
+    @RequestMapping(value = "/Owner/{id}", method = RequestMethod.DELETE)
+    public ResponseEntity<Owner> deleteOwner(@PathVariable("id") long id) {
+        System.out.println("Fetching & Deleting Owner with id " + id);
+
+        Owner Owner = ownerDataService.findOwnerById(id);
+        if (Owner == null) {
+            System.out.println("Unable to delete. Owner with id " + id + " not found");
+            return new ResponseEntity<Owner>(HttpStatus.NOT_FOUND);
+        }
+
+        ownerDataService.deleteOwnerById(id);
+        return new ResponseEntity<Owner>(HttpStatus.NO_CONTENT);
+    }
+
 
 }
