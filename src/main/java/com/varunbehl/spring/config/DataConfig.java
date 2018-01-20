@@ -20,7 +20,7 @@ class DataConfig {
         dataSource.setDriverClass(Driver.class);
         dataSource.setUsername("root");
         dataSource.setUrl("jdbc:mysql://localhost:8889/gym");
-        dataSource.setPassword("Pulsur");
+        dataSource.setPassword("root");
 
         return dataSource;
     }
