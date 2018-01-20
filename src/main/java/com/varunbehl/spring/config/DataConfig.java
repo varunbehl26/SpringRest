@@ -12,7 +12,7 @@ import javax.sql.DataSource;
 
 @Configuration
 @MapperScan("com.varunbehl.spring.persistence")
-public class DataConfig {
+class DataConfig {
 
     @Bean
     public DataSource dataSource() {

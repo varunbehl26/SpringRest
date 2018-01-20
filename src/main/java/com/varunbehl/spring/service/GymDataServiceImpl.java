@@ -29,8 +29,8 @@ public class GymDataServiceImpl implements GymDataService {
     }
 
     @Override
-    public int deletegymById(long id) {
-        return gymDataMapper.deletegymById(id);
+    public void deletegymById(long id) {
+        gymDataMapper.deletegymById(id);
     }
 
     @Override

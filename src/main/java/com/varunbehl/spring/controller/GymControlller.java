@@ -13,7 +13,7 @@ import org.springframework.web.util.UriComponentsBuilder;
 import java.util.List;
 
 @RestController
-public class GymControlller {
+class GymControlller {
 
     @Autowired
     private GymDataService gymDataService;

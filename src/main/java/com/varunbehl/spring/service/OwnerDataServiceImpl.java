@@ -25,9 +25,8 @@ public class OwnerDataServiceImpl implements OwnerDataService {
     }
 
     @Override
-    public boolean saveOwner(Owner myData) {
+    public void saveOwner(Owner myData) {
         ownerMapper.saveOwner(myData);
-        return true;
     }
 
 
@@ -45,8 +44,8 @@ public class OwnerDataServiceImpl implements OwnerDataService {
     }
 
     @Override
-    public int deleteOwnerById(long id) {
-        return ownerMapper.deleteOwnwer(id);
+    public void deleteOwnerById(long id) {
+        ownerMapper.deleteOwnwer(id);
     }
 
 }

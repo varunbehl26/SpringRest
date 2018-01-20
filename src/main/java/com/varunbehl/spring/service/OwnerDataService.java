@@ -9,7 +9,7 @@ public interface OwnerDataService {
 
     List<Owner> listAllGymOwners();
 
-    boolean saveOwner(Owner myData);
+    void saveOwner(Owner myData);
 
 
     Owner findOwnerById(long id);
@@ -18,5 +18,5 @@ public interface OwnerDataService {
 
     boolean isMyDataExist(Owner myData);
 
-    int deleteOwnerById(long id);
+    void deleteOwnerById(long id);
 }

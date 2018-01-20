@@ -11,7 +11,7 @@ public interface GymDataService {
 
     void saveGymData(Gym myData);
 
-    int deletegymById(long id);
+    void deletegymById(long id);
 
     void updateGym(Gym gym);
 }
