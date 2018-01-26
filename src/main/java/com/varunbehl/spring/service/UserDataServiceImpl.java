@@ -14,13 +14,13 @@ public class UserDataServiceImpl implements UserDataService {
     private UserDataMapper userDataMapper;
 
     @Override
-    public List<User> getAllData() {
-        return userDataMapper.getAllData();
+    public List<User> getAllUsers() {
+        return userDataMapper.getAllUsers();
     }
 
     @Override
-    public List<User> findById(String id) {
-        return userDataMapper.findById(id);
+    public List<User> getUsersByGymId(String id) {
+        return userDataMapper.getUsersByGymId(id);
     }
 
     public int saveUserData(User myData) {
@@ -28,8 +28,8 @@ public class UserDataServiceImpl implements UserDataService {
     }
 
     @Override
-    public User findByEmail(String email) {
-        return userDataMapper.findByEmail(email);
+    public User getUserByEmail(String email) {
+        return userDataMapper.getUserByEmail(email);
     }
 
 }

@@ -1,5 +1,6 @@
 package com.varunbehl.spring.controller;
 
+import com.varunbehl.spring.model.MasterResponse;
 import com.varunbehl.spring.model.Owner;
 import com.varunbehl.spring.service.OwnerDataService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,25 +21,25 @@ class OwnerControlller {
 
 
     @RequestMapping(value = "/Owner/", method = RequestMethod.GET)
-    public ResponseEntity<List<Owner>> listAllGymOwners() {
+    public ResponseEntity<MasterResponse> listAllGymOwners() {
         List<Owner> ownerList = ownerDataService.listAllGymOwners();
         if (ownerList.isEmpty()) {
-            return new ResponseEntity<List<Owner>>(HttpStatus.NO_CONTENT);
+            return new ResponseEntity<MasterResponse>(HttpStatus.NO_CONTENT);
         }
-        return new ResponseEntity<List<Owner>>(ownerList, HttpStatus.OK);
+        MasterResponse masterResponse = new MasterResponse("", true, ownerList);
+        return new ResponseEntity<MasterResponse>(masterResponse, HttpStatus.OK);
     }
 
 
-    @RequestMapping(value = "/Owner/{id}"
-            + "er/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Owner> findOwnerById(@PathVariable("id") long id) {
-        System.out.println("Fetching owner with id " + id);
+    @RequestMapping(value = "/Owner/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<MasterResponse> findOwnerById(@PathVariable("id") long id) {
         Owner owner = ownerDataService.findOwnerById(id);
         if (owner == null) {
             System.out.println("owner with id " + id + " not found");
-            return new ResponseEntity<Owner>(HttpStatus.NOT_FOUND);
+            return new ResponseEntity<MasterResponse>(HttpStatus.NOT_FOUND);
         }
-        return new ResponseEntity<Owner>(owner, HttpStatus.OK);
+        MasterResponse masterResponse = new MasterResponse("", true, owner);
+        return new ResponseEntity<MasterResponse>(masterResponse, HttpStatus.OK);
     }
 
 

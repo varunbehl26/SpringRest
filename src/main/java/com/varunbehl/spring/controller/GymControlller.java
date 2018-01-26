@@ -1,6 +1,7 @@
 package com.varunbehl.spring.controller;
 
 import com.varunbehl.spring.model.Gym;
+import com.varunbehl.spring.model.MasterResponse;
 import com.varunbehl.spring.service.GymDataService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
@@ -20,22 +21,25 @@ class GymControlller {
 
 
     @RequestMapping(value = "/Gym/", method = RequestMethod.GET)
-    public ResponseEntity<List<Gym>> listAllGyms() {
+    public ResponseEntity<MasterResponse> listAllGyms() {
         List<Gym> gymList = gymDataService.listAllGyms();
         if (gymList.isEmpty()) {
-            return new ResponseEntity<List<Gym>>(HttpStatus.NO_CONTENT);
+            return new ResponseEntity<MasterResponse>(HttpStatus.NO_CONTENT);
         }
-        return new ResponseEntity<List<Gym>>(gymList, HttpStatus.OK);
+        MasterResponse masterResponse = new MasterResponse("", true, gymList);
+        return new ResponseEntity<MasterResponse>(masterResponse, HttpStatus.OK);
     }
 
     @RequestMapping(value = "/Gym/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Gym> findGymById(@PathVariable("id") String id) {
+    public ResponseEntity<MasterResponse> findGymById(@PathVariable("id") String id) {
         System.out.println("Fetching gym with id " + id);
         Gym gym = gymDataService.findGymById(id);
         if (gym == null) {
-            return new ResponseEntity<Gym>(HttpStatus.NOT_FOUND);
+            return new ResponseEntity<MasterResponse>(HttpStatus.NOT_FOUND);
         }
-        return new ResponseEntity<Gym>(gym, HttpStatus.OK);
+        MasterResponse masterResponse = new MasterResponse("", true, gym);
+
+        return new ResponseEntity<MasterResponse>(masterResponse, HttpStatus.OK);
     }
 
 

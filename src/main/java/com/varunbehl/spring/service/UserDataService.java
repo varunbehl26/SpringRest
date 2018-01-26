@@ -5,11 +5,11 @@ import com.varunbehl.spring.model.User;
 import java.util.List;
 
 public interface UserDataService {
-    List<User> getAllData();
+    List<User> getAllUsers();
 
-    List<User> findById(String id);
+    List<User> getUsersByGymId(String id);
 
     int saveUserData(User myData);
 
-    User findByEmail(String email);
+    User getUserByEmail(String email);
 }

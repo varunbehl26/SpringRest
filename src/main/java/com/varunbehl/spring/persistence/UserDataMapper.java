@@ -8,7 +8,7 @@ import java.util.List;
 public interface UserDataMapper {
 
     @Select("SELECT * FROM user")
-    List<User> getAllData();
+    List<User> getAllUsers();
 
 
     @Options(useGeneratedKeys = true, keyProperty = "userId", keyColumn = "userId")
@@ -22,8 +22,8 @@ public interface UserDataMapper {
     int deleteData(User myData);
 
     @Select("SELECT * FROM user where gymId = #{id}")
-    List<User> findById(String id);
+    List<User> getUsersByGymId(String id);
 
     @Select("SELECT * FROM user where userEmail = #{email}")
-    User findByEmail(String email);
+    User getUserByEmail(String email);
 }
